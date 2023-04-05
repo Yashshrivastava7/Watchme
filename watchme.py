@@ -1,16 +1,8 @@
 import os
 from time import sleep
-from os import listdir
 from collections import defaultdict
 from os.path import isfile, join
 from os import walk
-
-def get_all_files(curr_path):
-   paths = []
-   for path in listdir(curr_path):
-       if isfile(join(curr_path,path)):
-           paths.append(path)
-   return paths        
 
 def get_time(file):
     fd = os.open(file, os.O_RDONLY)
@@ -36,6 +28,4 @@ def watch_changes(paths):
     
 if __name__ == "__main__":
     paths = get_all_paths(".")
-    print(paths[0])
-    print(os.stat(paths[0]).st_mtime) 
     watch_changes(paths)
