@@ -20,3 +20,4 @@ def get_all_paths(curr_path):
 if __name__ == "__main__":
     paths = get_all_paths(".")
     print(paths) 
+    
