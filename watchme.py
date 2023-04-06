@@ -11,9 +11,11 @@ def get_time(file):
 
 def get_all_paths(curr_path):
     paths = []
+    extentions_to_watch = {"cpp":1 , "ava":1, ".js":1, ".ts":1, "tsx":1, "jsx":1, "txt":1}
     for (dirpath, dirname, files) in os.walk(curr_path):
         for file in files:
-            paths.append(join(dirpath,file))
+            if(file[-3:] in extentions_to_watch):
+                paths.append(join(dirpath,file))
     return paths
 
 def watch_changes(paths):
@@ -21,6 +23,8 @@ def watch_changes(paths):
     for i in range(100):
         for file in paths:
             curr_save_time = get_time(file)
+            if last_save_time.get(file, "Not found") == "Not found":
+                last_save_time[file] = curr_save_time
             if last_save_time[file] != curr_save_time:
                 last_save_time[file] = curr_save_time
                 print(f"File: {file} was changed")
@@ -28,4 +32,4 @@ def watch_changes(paths):
     
 if __name__ == "__main__":
     paths = get_all_paths(".")
-    watch_changes(paths)
+    print(paths)
