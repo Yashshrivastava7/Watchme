@@ -32,4 +32,4 @@ def watch_changes(paths):
     
 if __name__ == "__main__":
     paths = get_all_paths(".")
-    print(paths)
+    watch_changes(paths)
