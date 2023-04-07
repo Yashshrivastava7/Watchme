@@ -3,6 +3,7 @@ from time import sleep
 from collections import defaultdict
 from os.path import isfile, join
 from os import walk
+import json
 
 def get_extension(filename):
     extentsion = filename.split(".")
