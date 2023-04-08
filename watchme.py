@@ -8,7 +8,9 @@ import json
 with open('config.json') as config_file:
     data = json.load(config_file)
 
-COMMAND = f"kill -kill $(netstat -vatn | rg {data[PORT]} |" + r"awk '{ print $9 }' | head -1)"
+PORT = data["PORT"]
+COMMAND = f"kill -kill $(netstat -vatn | rg {PORT} |" + r"awk '{ print $9 }' | head -1)"
+RUN = data["script"]
 
 def get_extension(filename):
     extentsion = filename.split(".")
@@ -41,6 +43,7 @@ def watch_changes():
             if last_save_time[file] != curr_save_time:
                 last_save_time[file] = curr_save_time
                 os.system(COMMAND)
+                os.system(RUN)
                 print(f"File: {file} was changed")
         sleep(1)
     
