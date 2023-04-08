@@ -1,4 +1,3 @@
 {
-  "extensions": ["cpp", "txt", "py", "java", "ts", "js", "tsx", "jsx"],
-  "hello": []
+  "extensions": ["cpp", "txt", "py", "java", "ts", "js", "tsx", "jsx"]
 }
