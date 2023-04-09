@@ -48,4 +48,5 @@ def watch_changes():
         sleep(1)
     
 if __name__ == "__main__":
+    os.system(RUN)
     watch_changes()
