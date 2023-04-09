@@ -1,4 +1,5 @@
 import os
+import sys
 from time import sleep
 from collections import defaultdict
 from os.path import isfile, join
@@ -31,10 +32,10 @@ def get_all_paths(curr_path):
                 paths.append(join(dirpath,file))
     return paths
 
-def watch_changes():
+def watch_changes(path):
     last_save_time = defaultdict(float)
-    for i in range(100):
-        paths = get_all_paths(".")
+    for i in range(10000):
+        paths = get_all_paths(path)
         for file in paths:
             curr_save_time = get_time(file)
             if last_save_time.get(file, "Not found") == "Not found":
@@ -42,11 +43,24 @@ def watch_changes():
                 print(f"File {file} was created")
             if last_save_time[file] != curr_save_time:
                 last_save_time[file] = curr_save_time
-                os.system(COMMAND)
-                os.system(RUN)
+                try:
+                    print("Running the commands")
+                    os.system(COMMAND)
+                    os.system(RUN)
+                except e:
+                    print("Errrr", e)
                 print(f"File: {file} was changed")
         sleep(1)
     
 if __name__ == "__main__":
-    os.system(RUN)
-    watch_changes()
+    path = "."
+    if len(sys.argv) == 2 :
+        path = sys.argv[1]
+    print(sys.argv)
+    print(path)
+    try:
+        os.chdir(path)
+        os.system(RUN)
+    except e:
+        print("Errrr", e)
+    watch_changes(path)
