@@ -1,6 +1,8 @@
 import os
+import multiprocessing
 import signal
 import sys
+import threading 
 from time import sleep
 from collections import defaultdict
 from os.path import isfile, join
@@ -12,7 +14,6 @@ with open('config.json') as config_file:
 
 PORT = data["PORT"]
 COMMAND = f"kill -kill $(netstat -vatn | rg {PORT} |" + r"awk '{ print $9 }' | head -1)"
-RUN = data["script"]
 
 def get_extension(filename):
     extentsion = filename.split(".")
@@ -33,28 +34,34 @@ def get_all_paths(curr_path):
                 paths.append(join(dirpath,file))
     return paths
 
-def watch_changes(new_process):
+def watch_changes(t1):
     last_save_time = defaultdict(float)
     for i in range(10000):
+        is_changed = False
         paths = get_all_paths(".")
         for file in paths:
             curr_save_time = get_time(file)
             if last_save_time.get(file, "Not found") == "Not found":
+                # is_changed = True
                 last_save_time[file] = curr_save_time
                 print(f"File {file} was created")
             if last_save_time[file] != curr_save_time:
+                is_changed = True
                 last_save_time[file] = curr_save_time
                 print(f"File: {file} was changed")
-                print(new_process)
-                if new_process > 0 :
-                    print(new_process)
-                    print("Server killed")
-                    os.kill(new_process, signal.SIGINT)
+        if is_changed :
+            print("lol")
+            os.system(COMMAND)
+            t1.terminate() 
+            while t1.is_alive() :
+                pass
+            t1.close()
+            t1 = multiprocessing.Process(target=os.system, args=["node index.js"])
+            t1.start()
         sleep(1)
     
 if __name__ == "__main__":
-    new_process = os.fork()
-    if new_process > 0 :
-        os.system("node index.js")
-        print(new_process)
-    watch_changes(new_process)
+    # t1 = threading.Thread(target=os.system, args=["node index.js"])
+    t1 = multiprocessing.Process(target=os.system, args=["node index.js"])
+    t1.start()
+    watch_changes(t1)

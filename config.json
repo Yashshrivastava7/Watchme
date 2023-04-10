@@ -1,5 +1,5 @@
 {
   "extensions": ["cpp", "txt", "py", "java", "ts", "js", "tsx", "jsx"],
   "script": "npm run dev &",
-  "PORT": "8080"
+  "PORT": "8000"
 }
