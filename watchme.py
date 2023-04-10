@@ -13,6 +13,7 @@ with open('config.json') as config_file:
     data = json.load(config_file)
 
 PORT = data["PORT"]
+RUN = data["script"]
 COMMAND = f"kill -kill $(netstat -vatn | rg {PORT} |" + r"awk '{ print $9 }' | head -1)"
 
 def get_extension(filename):
@@ -56,12 +57,12 @@ def watch_changes(t1):
             while t1.is_alive() :
                 pass
             t1.close()
-            t1 = multiprocessing.Process(target=os.system, args=["node index.js"])
+            t1 = multiprocessing.Process(target=os.system, args=[RUN])
             t1.start()
         sleep(1)
     
 if __name__ == "__main__":
     # t1 = threading.Thread(target=os.system, args=["node index.js"])
-    t1 = multiprocessing.Process(target=os.system, args=["node index.js"])
+    t1 = multiprocessing.Process(target=os.system, args=[RUN])
     t1.start()
     watch_changes(t1)
