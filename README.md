@@ -1,6 +1,6 @@
 # Watchme
 
-## Monitor changes on files in a directory and automatically re-run the server when a file is changed (re-running server broke in testing but you can re-run a file xD)
+## Monitor changes on files in a directory and automatically re-run the server when a file is changed
 
 ### Only works on `Linus/Unix`
 
