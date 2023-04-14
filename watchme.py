@@ -29,10 +29,10 @@ def get_all_paths(curr_path):
     paths = []
     extentions_to_watch = data["extensions"]
     for (dirpath, dirname, files) in os.walk(curr_path):
-        if dirname != "node_modules" :
-            for file in files:
-                if(get_extension(file) in extentions_to_watch):
-                    paths.append(join(dirpath,file))
+        [dirname.remove(d) for d in list(dirname) if d in exclude]
+        for file in files:
+            if(get_extension(file) in extentions_to_watch):
+                paths.append(join(dirpath,file))
     return paths
 
 def watch_changes(t1):
