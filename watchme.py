@@ -2,7 +2,6 @@ import os
 import multiprocessing
 import signal
 import sys
-import threading 
 from time import sleep
 from collections import defaultdict
 from os.path import isfile, join
@@ -43,7 +42,6 @@ def watch_changes(t1):
         for file in paths:
             curr_save_time = get_time(file)
             if last_save_time.get(file, "Not found") == "Not found":
-                # is_changed = True
                 last_save_time[file] = curr_save_time
                 print(f"File {file} was created")
             if last_save_time[file] != curr_save_time:
@@ -62,7 +60,6 @@ def watch_changes(t1):
         sleep(1)
     
 if __name__ == "__main__":
-    # t1 = threading.Thread(target=os.system, args=["node index.js"])
     t1 = multiprocessing.Process(target=os.system, args=[RUN])
     t1.start()
     watch_changes(t1)
