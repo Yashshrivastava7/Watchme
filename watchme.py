@@ -28,6 +28,7 @@ def get_time(file):
 def get_all_paths(curr_path):
     paths = []
     extentions_to_watch = data["extensions"]
+    exclude = data["ignore directories"]
     for (dirpath, dirname, files) in os.walk(curr_path):
         [dirname.remove(d) for d in list(dirname) if d in exclude]
         for file in files:
