@@ -14,6 +14,7 @@
 {
   "extensions": [],
   "script": " ",
-  "PORT": " "
+  "PORT": " ",
+  "Ignore Directories" = []
 }
 ```

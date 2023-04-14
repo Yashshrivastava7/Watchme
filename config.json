@@ -1,5 +1,6 @@
 {
   "extensions": ["cpp", "txt", "py", "java", "ts", "js", "tsx", "jsx"],
   "script": "node index.js",
-  "PORT": "8000"
+  "PORT": "8000",
+  "Ignore Directories": ["node_modules", ".git"]
 }
